@@ -76,6 +76,9 @@
                                 <rect key="frame" x="20" y="59" width="33" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="&lt;"/>
+                                <connections>
+                                    <action selector="left_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ffQ-Nf-pxc"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYZ-So-1rn">
                                 <rect key="frame" x="335" y="344" width="49" height="31"/>
@@ -85,10 +88,13 @@
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdz-9h-gxF">
-                                <rect key="frame" x="185" y="64" width="33" height="31"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdz-9h-gxF">
+                                <rect key="frame" x="185" y="65" width="33" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="&gt;"/>
+                                <connections>
+                                    <action selector="right_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1D4-u1-JPv"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -113,6 +119,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dateLabel" destination="ypG-Fd-7eJ" id="Nw8-Xa-cdf"/>
                         <segue destination="fBq-SS-nmC" kind="show" id="ZzY-pj-mkK"/>
                     </connections>
                 </viewController>
