@@ -11,6 +11,11 @@ class ViewController: UIViewController {
 
     // 스토리보드 연결
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    @IBAction func addingBtn(_ sender: UIButton) {
+        performSegue(withIdentifier: "Add", sender: self)
+    }
+    /* ================================== */
     
     let now = Date()
     let thisDate = DateFormatter()
@@ -18,9 +23,17 @@ class ViewController: UIViewController {
     var cal = Calendar.current
     var components = DateComponents()
     
+    /* 테이블 변수 선언*/
+    var tableViewItems = ["item1", "item2", "item3"]
+    
+    /* ================================== */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
+        
+        // DataSource delegete을 ViewController로 설정
+        tableView.dataSource = self
     }
     
     private func initView(){
@@ -53,3 +66,14 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath)
+        cell.textLabel?.text = tableViewItems[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableViewItems.count // 아이템 수 반환
+    }
+}

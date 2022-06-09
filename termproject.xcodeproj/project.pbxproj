@@ -13,6 +13,8 @@
 		2420447D2836090D003B8AC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2420447B2836090D003B8AC9 /* Main.storyboard */; };
 		2420447F2836090E003B8AC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2420447E2836090E003B8AC9 /* Assets.xcassets */; };
 		242044822836090E003B8AC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 242044802836090E003B8AC9 /* LaunchScreen.storyboard */; };
+		9C485A022852418A00FE71A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C485A012852418A00FE71A2 /* GoogleService-Info.plist */; };
+		9C485A05285241DD00FE71A2 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9C485A04285241DD00FE71A2 /* FirebaseAnalytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,7 @@
 		2420447E2836090E003B8AC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		242044812836090E003B8AC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		242044832836090E003B8AC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C485A012852418A00FE71A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C485A05285241DD00FE71A2 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +66,7 @@
 				2420447B2836090D003B8AC9 /* Main.storyboard */,
 				2420447E2836090E003B8AC9 /* Assets.xcassets */,
 				242044802836090E003B8AC9 /* LaunchScreen.storyboard */,
+				9C485A012852418A00FE71A2 /* GoogleService-Info.plist */,
 				242044832836090E003B8AC9 /* Info.plist */,
 			);
 			path = termproject;
@@ -83,6 +88,9 @@
 			dependencies = (
 			);
 			name = termproject;
+			packageProductDependencies = (
+				9C485A04285241DD00FE71A2 /* FirebaseAnalytics */,
+			);
 			productName = termproject;
 			productReference = 242044722836090D003B8AC9 /* termproject.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +119,9 @@
 				Base,
 			);
 			mainGroup = 242044692836090D003B8AC9;
+			packageReferences = (
+				9C485A03285241DD00FE71A2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 242044732836090D003B8AC9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				242044822836090E003B8AC9 /* LaunchScreen.storyboard in Resources */,
+				9C485A022852418A00FE71A2 /* GoogleService-Info.plist in Resources */,
 				2420447F2836090E003B8AC9 /* Assets.xcassets in Resources */,
 				2420447D2836090D003B8AC9 /* Main.storyboard in Resources */,
 			);
@@ -360,6 +372,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9C485A03285241DD00FE71A2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9C485A04285241DD00FE71A2 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C485A03285241DD00FE71A2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2420446A2836090D003B8AC9 /* Project object */;
 }
