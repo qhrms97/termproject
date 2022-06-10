@@ -228,7 +228,6 @@
                     <navigationItem key="navigationItem" id="UA8-pw-0fZ"/>
                     <connections>
                         <outlet property="calendar" destination="Jzy-sk-zE6" id="b4T-WI-wPW"/>
-                        <outlet property="dateLabel" destination="ocq-Is-P6N" id="QQK-vk-GTC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yt0-hw-sy1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
