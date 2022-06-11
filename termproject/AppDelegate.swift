@@ -18,7 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
-    //    Firestore.firestore().collection("jmlee").document("key").setData(["name": "Jae Moon Lee"])
+//        Firestore.firestore().collection("jmlee").document("key").setData(["name": "Jae Moon Lee"])
+//
+//        Firestore.firestore().collection("account").document("KK").setData(["money" : 300])
         
         return true
     }

@@ -3,6 +3,7 @@ import UIKit
 import FSCalendar
 import Firebase
 import FirebaseDatabase
+import FirebaseFirestore
 
 protocol DocumentSerializable {
     init?(dictionary:[String:Any])
@@ -36,7 +37,7 @@ class SecondViewController: UIViewController {
     
     // DB
     var ref: DatabaseReference!
-    let db = Database.database().reference()
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,11 +72,9 @@ class SecondViewController: UIViewController {
     
     // 버튼 액션 추가
     @IBAction func minusBtn(_ sender: Any) {
-//        let minusMoney = Money(date: dateLabel.text!, content: content.text!, money: 0, plus: false, yearMonth: "")
+        let minusMoney = Money(date: dateLabel.text!, content: content.text!, money: (money.text! as NSString).integerValue, plus: false, yearMonth: "")
         
-//        self.ref = db.collection("Money").document("DAY")
-//            .collection("Moneys").addDocument(data: minusMoney.dictionary)
-//        self.db.child("jmlee").child("key").setValue(["username": "BOO"])
+        db.collection("account").document("DAY1").setData(minusMoney.dictionary)
         
         dismiss(animated: true, completion: nil)
     }
