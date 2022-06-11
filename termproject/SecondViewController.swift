@@ -72,13 +72,29 @@ class SecondViewController: UIViewController {
     
     // 버튼 액션 추가
     @IBAction func minusBtn(_ sender: Any) {
-        let minusMoney = Money(date: dateLabel.text!, content: content.text!, money: (money.text! as NSString).integerValue, plus: false, yearMonth: "")
         
-        db.collection("account").document("DAY1").setData(minusMoney.dictionary)
+        // 날짜 자르기
+        let month = (dateLabel.text!).split(separator:"-")[0]+(dateLabel.text!).split(separator:"-")[1]
+        
+        // 지출 객체
+        let minusMoney = Money(date: dateLabel.text!, content: content.text!, money: (money.text! as NSString).integerValue, plus: false, yearMonth: String(month))
+        
+        // 디비에 넣어줌
+        db.collection("account").document().setData(minusMoney.dictionary)
         
         dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func plusBtn(_ sender: Any) {
+        // 날짜 자르기
+        let month = (dateLabel.text!).split(separator:"-")[0]+(dateLabel.text!).split(separator:"-")[1]
+        
+        // 수입 객체
+        let plusMoney = Money(date: dateLabel.text!, content: content.text!, money: (money.text! as NSString).integerValue, plus: true, yearMonth: String(month))
+        
+        // 디비에 넣어줌
+        db.collection("account").document().setData(plusMoney.dictionary)
+        
         dismiss(animated: true, completion: nil)
     }
 }
