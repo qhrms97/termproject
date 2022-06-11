@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class ViewController: UIViewController {
 
@@ -26,6 +28,9 @@ class ViewController: UIViewController {
     /* 테이블 변수 선언*/
     var tableViewItems = ["item1", "item2", "item3"]
     
+    /* 데이터 베이스 접근 */
+    let db = Database.database().reference()
+    
     /* ================================== */
     
     override func viewDidLoad() {
@@ -34,6 +39,8 @@ class ViewController: UIViewController {
         
         // DataSource delegete을 ViewController로 설정
         tableView.dataSource = self
+        
+        self.getData()
     }
     
     private func initView(){
@@ -65,12 +72,28 @@ class ViewController: UIViewController {
         dateLabel.text = thisDate.string(from: myDate!)
     }
     
+    // 데이터 가져오기
+    func getData(){
+        print("CHILED" , db.child("account"))
+        
+        db.child("jmlee").observeSingleEvent(of: .value) {snapshot in
+            print("---> \(snapshot)")
+            let value = snapshot.value as? String ?? ""
+            DispatchQueue.main.async {
+                print("DB VALUE ", value)
+            }
+        }
+    }
+    
 }
 
 extension ViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath)
-        cell.textLabel?.text = tableViewItems[indexPath.row]
+        
+        // 테이블 뷰 아이템 지정
+        (cell.contentView.subviews[0] as! UILabel).text = tableViewItems[indexPath.row]
+        
         return cell
     }
     

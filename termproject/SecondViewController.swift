@@ -43,6 +43,14 @@ class SecondViewController: UIViewController {
         // 터치 이벤트
         calendar.delegate = self
     }
+    
+    // 버튼 액션 추가
+    @IBAction func minusBtn(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    @IBAction func plusBtn(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension SecondViewController: FSCalendarDelegate {

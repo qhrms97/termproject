@@ -144,6 +144,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="지출추가"/>
+                                <connections>
+                                    <action selector="minusBtn:" destination="fBq-SS-nmC" eventType="touchUpInside" id="3rl-vb-1n8"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jzy-sk-zE6" customClass="FSCalendar">
                                 <rect key="frame" x="67" y="64" width="280" height="151"/>
@@ -199,6 +202,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="수입추가"/>
+                                <connections>
+                                    <action selector="plusBtn:" destination="fBq-SS-nmC" eventType="touchUpInside" id="UlC-Vf-TVt"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fwN-Py-1gf"/>
