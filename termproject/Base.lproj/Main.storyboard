@@ -234,6 +234,9 @@
                     <navigationItem key="navigationItem" id="UA8-pw-0fZ"/>
                     <connections>
                         <outlet property="calendar" destination="Jzy-sk-zE6" id="b4T-WI-wPW"/>
+                        <outlet property="content" destination="9W1-4C-7gz" id="Cdd-JC-l9J"/>
+                        <outlet property="dateLabel" destination="ocq-Is-P6N" id="wTS-4N-wuF"/>
+                        <outlet property="money" destination="94s-mV-a5Z" id="EdW-OE-Afe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yt0-hw-sy1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

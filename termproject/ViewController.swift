@@ -68,21 +68,23 @@ class ViewController: UIViewController {
     // 날짜 변동 함수...? 따로 만들어야함
     func DateCollection(){
         let myDate = cal.date(from: components)
-        // dateLabel.text = current_date_string
         dateLabel.text = thisDate.string(from: myDate!)
     }
     
-    // 데이터 가져오기
+    // 파이어베이스 데이터 가져오기
     func getData(){
-        print("CHILED" , db.child("account"))
+        // self.db.child("jmlee").child("key1").setValue(["username": "BOBO"])
         
-        db.child("jmlee").observeSingleEvent(of: .value) {snapshot in
-            print("---> \(snapshot)")
-            let value = snapshot.value as? String ?? ""
-            DispatchQueue.main.async {
-                print("DB VALUE ", value)
-            }
-        }
+        
+        //    Firestore.firestore().collection("jmlee").document("key").setData(["name": "Jae Moon Lee"])
+            
+//        db.child("jmlee").child("key").observeSingleEvent(of: .value) {snapshot in
+//            print("---> \(snapshot)")
+//            let value = snapshot.value as? String ?? ""
+//            DispatchQueue.main.async {
+//                print("DB VALUE2 ", value)
+//            }
+//        }
     }
     
 }
