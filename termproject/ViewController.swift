@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     var components = DateComponents()
     
     /* 테이블 변수 선언*/
-    var tableViewItems = ["item1", "item2", "item3"]
+    var tableViewItems = [""]
     
     /* 데이터 베이스 접근 */
     let db = Firestore.firestore()
@@ -85,6 +85,14 @@ class ViewController: UIViewController {
                     do{
                         let data = document.data()
                         print(data)
+                        
+//                        if(data["yearMonth"] as! String == "202206"){
+//                            self.tableViewItems.append(data["content"] as! String)
+//                        }
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     }
                 }
             }
