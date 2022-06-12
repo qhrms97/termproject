@@ -9,6 +9,7 @@ protocol DocumentSerializable {
     init?(dictionary:[String:Any])
 }
 
+// Money 구조체 생성
 struct Money {
     var date: String
     var content: String
@@ -36,7 +37,7 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var money: UITextField!
     
     // DB
-    var ref: DatabaseReference!
+    // var ref: DatabaseReference!
     let db = Firestore.firestore()
     
     override func viewDidLoad() {

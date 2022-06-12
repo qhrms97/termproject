@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import FirebaseFirestore
 
 class ViewController: UIViewController {
 
@@ -29,7 +30,7 @@ class ViewController: UIViewController {
     var tableViewItems = ["item1", "item2", "item3"]
     
     /* 데이터 베이스 접근 */
-    let db = Database.database().reference()
+    let db = Firestore.firestore()
     
     /* ================================== */
     
@@ -40,7 +41,7 @@ class ViewController: UIViewController {
         // DataSource delegete을 ViewController로 설정
         tableView.dataSource = self
         
-//        self.getData()
+        self.getData()
     }
     
     private func initView(){
@@ -72,25 +73,23 @@ class ViewController: UIViewController {
     }
     
     // 파이어베이스 데이터 가져오기
-//    func getData(){
-////        var content : String
-////        var date : String
-////        var money : Int
-////        var plus : Bool
-////        var yearMonth : String
-////
-////        let ref : DatabaseReference! = Database.database().reference()
-////        print("REF : ", ref)
-////        ref.child("account").child("key").observeSingleEvent(of: .value, with: {snapshot in
-////            let value = snapshot.value as? NSDictionary
-////            content = value?["content"] as String ?? "No String"
-////            date = value?["date"] as String ?? ""
-////            money = value?["money"] as Int ?? -1
-////            plus = value?["plus"] as Bool ?? false
-////            yearMonth = value?["yearMonth"] as String ?? ""
-////        })
-////    }
-//
+    func getData(){
+        db.collection("account").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("ERROR GETTING DOCUMENT: \(err)")
+            } else {
+                print("GETTING DOCUMENT")
+                guard let documents = querySnapshot?.documents else {return}
+                
+                for document in documents {
+                    do{
+                        let data = document.data()
+                        print(data)
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension ViewController : UITableViewDataSource {
