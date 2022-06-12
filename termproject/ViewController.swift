@@ -27,7 +27,6 @@ class ViewController: UIViewController {
         secPage.modalPresentationStyle = .fullScreen
         self.present(secPage, animated: true)
         
-//        performSegue(withIdentifier: "Add", sender: self)
     }
     /* ================================== */
     
@@ -41,6 +40,7 @@ class ViewController: UIViewController {
     var tableViewItems : [String] = []
     var tableViewItems2 : [String] = []
     var tableViewItems3 : [Int] = []
+    var tableViewItems4 : [String] = []
     
     /* 데이터 베이스 접근 */
     let db = Firestore.firestore()
@@ -99,13 +99,40 @@ class ViewController: UIViewController {
         self.DateCollection()
     }
     
+    // 초기화 함수
+    private func varinit() {
+        self.tableViewItems = []
+        self.tableViewItems2 = []
+        self.tableViewItems3 = []
+        self.tableViewItems4 = []
+        self.minusItems = []
+        self.minustotal = 0
+        self.plusItems = []
+        self.plustotal = 0
+    }
+    
     @IBAction func right_click(_ sender: Any) {
         components.month = components.month! + 1
         self.DateCollection()
+        self.varinit()
+        
+        self.getData()
+
+        self.tableView.reloadData()
+        
+        self.getplus()
+        self.getminus()
     }
     @IBAction func left_click(_ sender: Any) {
         components.month = components.month! - 1
         self.DateCollection()
+        self.varinit()
+        self.getData()
+
+        self.tableView.reloadData()
+        
+        self.getplus()
+        self.getminus()
     }
     
     // 날짜 변동 함수...? 따로 만들어야함
@@ -116,7 +143,11 @@ class ViewController: UIViewController {
     
     // 파이어베이스 데이터 가져오기
     func getData(){
-        db.collection("account").order(by: "date", descending: true).getDocuments() { [self] (querySnapshot, err) in
+        let year = dateLabel.text!
+        
+        print("YEAR ", year)
+        
+        db.collection("account").whereField("yearMonth", isEqualTo: dateLabel.text!).getDocuments() { [self] (querySnapshot, err) in
             if let err = err {
                 print("ERROR GETTING DOCUMENT #1 : \(err)")
             } else {
@@ -127,9 +158,13 @@ class ViewController: UIViewController {
                     do{
                         self.data = document.data()
                         
+                        print("DATA", data)
+                        
                         self.tableViewItems.append(self.data["date"] as! String)
                         self.tableViewItems2.append(self.data["content"] as! String)
                         self.tableViewItems3.append(self.data["money"] as! Int)
+                        self.tableViewItems4.append(self.data["plusminus"] as! String)
+
                         
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
@@ -141,7 +176,7 @@ class ViewController: UIViewController {
     }
     
     func getplus(){
-        db.collection("account").whereField("plus", isEqualTo: true).getDocuments() {
+        db.collection("account").whereField("plus", isEqualTo: true).whereField("yearMonth", isEqualTo: dateLabel.text!).getDocuments() {
             (querySnapshot, err) in
             if let err = err {
                 print("ERROR GETTING DOCUMENT #2 : \(err)")
@@ -171,7 +206,7 @@ class ViewController: UIViewController {
     }
     
     func getminus(){
-        db.collection("account").whereField("plus", isEqualTo: false).getDocuments() {
+        db.collection("account").whereField("plus", isEqualTo: false).whereField("yearMonth", isEqualTo: dateLabel.text!).getDocuments() {
             (querySnapshot, err) in
             if let err = err {
                 print("ERROR GETTING DOCUMENT #3 : \(err)")
@@ -209,6 +244,8 @@ extension ViewController : UITableViewDataSource {
         (cell.contentView.subviews[0] as! UILabel).text = tableViewItems[indexPath.row]
         (cell.contentView.subviews[1] as! UILabel).text = tableViewItems2[indexPath.row]
         (cell.contentView.subviews[2] as! UILabel).text = String(tableViewItems3[indexPath.row])
+        (cell.contentView.subviews[3] as! UILabel).text = tableViewItems4[indexPath.row]
+
         
         return cell
     }

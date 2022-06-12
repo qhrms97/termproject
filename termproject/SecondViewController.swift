@@ -16,6 +16,7 @@ struct Money {
     var money: Int
     var plus: Bool
     var yearMonth: String
+    var plusminus: String
     
     var dictionary: [String:Any] {
         return [
@@ -23,7 +24,8 @@ struct Money {
             "content": content,
             "money": money,
             "plus": plus,
-            "yearMonth": yearMonth
+            "yearMonth": yearMonth,
+            "plusminus": plusminus,
         ]
     }
         
@@ -79,10 +81,11 @@ class SecondViewController: UIViewController {
     @IBAction func minusBtn(_ sender: Any) {
         
         // 날짜 자르기
-        let month = (dateLabel.text!).split(separator:"-")[0]+(dateLabel.text!).split(separator:"-")[1]
+        let month = (dateLabel.text!).split(separator:"-")[0] + "-" + (dateLabel.text!).split(separator:"-")[1]
         
         // 지출 객체
-        let minusMoney = Money(date: dateLabel.text!, content: content.text!, money: (money.text! as NSString).integerValue, plus: false, yearMonth: String(month))
+        let minusMoney = Money(date: dateLabel.text!, content: content.text!, money: (money.text! as NSString).integerValue, plus: false, yearMonth: String(month), plusminus: "지출")
+        
         
         // 디비에 넣어줌
         db.collection("account").document().setData(minusMoney.dictionary)
@@ -92,10 +95,11 @@ class SecondViewController: UIViewController {
     
     @IBAction func plusBtn(_ sender: Any) {
         // 날짜 자르기
-        let month = (dateLabel.text!).split(separator:"-")[0]+(dateLabel.text!).split(separator:"-")[1]
+        let month = (dateLabel.text!).split(separator:"-")[0] + "-" + (dateLabel.text!).split(separator:"-")[1]
         
         // 수입 객체
-        let plusMoney = Money(date: dateLabel.text!, content: content.text!, money: (money.text! as NSString).integerValue, plus: true, yearMonth: String(month))
+        let plusMoney = Money(date: dateLabel.text!, content: content.text!, money: (money.text! as NSString).integerValue, plus: true, yearMonth: String(month), plusminus: "수입")
+        
         
         // 디비에 넣어줌
         db.collection("account").document().setData(plusMoney.dictionary)
@@ -118,9 +122,10 @@ extension Money : DocumentSerializable {
               let content = dictionary["content"] as? String,
               let money = dictionary["money"] as? Int,
               let plus = dictionary["plus"] as? Bool,
-              let yearMonth = dictionary["yearMonth"] as? String
+              let yearMonth = dictionary["yearMonth"] as? String,
+              let plusminus = dictionary["plusminus"] as? String
         else { return nil }
         
-        self.init(date: date, content: content, money: money, plus: plus, yearMonth: yearMonth)
+        self.init(date: date, content: content, money: money, plus: plus, yearMonth: yearMonth, plusminus: plusminus)
     }
 }
