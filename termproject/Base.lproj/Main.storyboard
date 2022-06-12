@@ -110,14 +110,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ifV-YS-YZF">
-                                <rect key="frame" x="254" y="188" width="11" height="21"/>
+                                <rect key="frame" x="254" y="188" width="84" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QcQ-9q-K7W">
-                                <rect key="frame" x="254" y="230" width="11" height="21"/>
+                                <rect key="frame" x="254" y="230" width="84" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -147,6 +147,8 @@
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="ypG-Fd-7eJ" id="Nw8-Xa-cdf"/>
+                        <outlet property="minusLabel" destination="ifV-YS-YZF" id="mwq-MW-0m3"/>
+                        <outlet property="plusLabel" destination="QcQ-9q-K7W" id="hIR-6w-4OC"/>
                         <outlet property="tableView" destination="MsG-bm-cy8" id="g0O-1v-umT"/>
                         <segue destination="fBq-SS-nmC" kind="show" identifier="Add" id="ZzY-pj-mkK"/>
                     </connections>
@@ -228,6 +230,15 @@
                                 <buttonConfiguration key="configuration" style="plain" title="수입추가"/>
                                 <connections>
                                     <action selector="plusBtn:" destination="fBq-SS-nmC" eventType="touchUpInside" id="UlC-Vf-TVt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1S9-ze-l7g">
+                                <rect key="frame" x="17" y="25" width="73" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="뒤로가기"/>
+                                <connections>
+                                    <action selector="BackBtn:" destination="fBq-SS-nmC" eventType="touchUpInside" id="JjK-fH-vcq"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -36,6 +36,10 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var content: UITextField!
     @IBOutlet weak var money: UITextField!
     
+    // 뒤로가기 버튼
+    @IBAction func BackBtn(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     // DB
     // var ref: DatabaseReference!
     let db = Firestore.firestore()

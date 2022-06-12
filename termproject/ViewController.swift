@@ -15,6 +15,9 @@ class ViewController: UIViewController {
     // 스토리보드 연결
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var minusLabel: UILabel!
+    @IBOutlet weak var plusLabel: UILabel!
+    
     @IBAction func addingBtn(_ sender: UIButton) {
         guard let secPage = self.storyboard?
             .instantiateViewController(withIdentifier: "SecPage") as? SecondViewController else {
@@ -113,7 +116,7 @@ class ViewController: UIViewController {
     
     // 파이어베이스 데이터 가져오기
     func getData(){
-        db.collection("account").getDocuments() { [self] (querySnapshot, err) in
+        db.collection("account").order(by: "date", descending: true).getDocuments() { [self] (querySnapshot, err) in
             if let err = err {
                 print("ERROR GETTING DOCUMENT #1 : \(err)")
             } else {
@@ -162,7 +165,7 @@ class ViewController: UIViewController {
                     }
                 }
                 
-                print("self plustotal " ,self.plustotal)
+                self.plusLabel.text = String(self.plustotal)
             }
         }
     }
@@ -192,7 +195,7 @@ class ViewController: UIViewController {
                     }
                 }
                 
-                print("self minus total " ,self.minustotal)
+                self.minusLabel.text = String(self.minustotal)
             }
         }
     }
