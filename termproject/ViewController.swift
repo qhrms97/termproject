@@ -27,10 +27,15 @@ class ViewController: UIViewController {
     var components = DateComponents()
     
     /* 테이블 변수 선언*/
-    var tableViewItems = [""]
+    var tableViewItems = ["날짜"]
+    var tableViewItems2 = ["내용"]
+    var tableViewItems3 = ["금액"]
     
     /* 데이터 베이스 접근 */
     let db = Firestore.firestore()
+//    let dbItems = [String:Any]()
+    // 빈 딕셔너리 생성
+    var data: [String:Any] = [:]
     
     /* ================================== */
     
@@ -74,7 +79,7 @@ class ViewController: UIViewController {
     
     // 파이어베이스 데이터 가져오기
     func getData(){
-        db.collection("account").getDocuments() { (querySnapshot, err) in
+        db.collection("account").getDocuments() { [self] (querySnapshot, err) in
             if let err = err {
                 print("ERROR GETTING DOCUMENT: \(err)")
             } else {
@@ -83,12 +88,11 @@ class ViewController: UIViewController {
                 
                 for document in documents {
                     do{
-                        let data = document.data()
-                        print(data)
+                        self.data = document.data()
                         
-//                        if(data["yearMonth"] as! String == "202206"){
-//                            self.tableViewItems.append(data["content"] as! String)
-//                        }
+                        self.tableViewItems.append(self.data["date"] as! String)
+                        self.tableViewItems2.append(self.data["content"] as! String)
+//                        self.tableViewItems3.append(self.data["money"] as! String)
                         
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
@@ -104,13 +108,26 @@ extension ViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath)
         
+//        print(data)
+//        let dictionary = self.data[(indexPath as NSIndexPath).row]
         // 테이블 뷰 아이템 지정
         (cell.contentView.subviews[0] as! UILabel).text = tableViewItems[indexPath.row]
+        (cell.contentView.subviews[1] as! UILabel).text = tableViewItems2[indexPath.row]
+//        (cell.contentView.subviews[2] as! UILabel).text = tableViewItems3[indexPath.row]
+//        let content = self.data[(indexPath.row]
+//        for value in data["content"].values{
+//            print("###", value)
+//        }
+        
+//        print("##### ", content)
+        
+//        (cell.contentView.subviews[0] as! UILabel).text = content[indexPath.row]
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewItems.count // 아이템 수 반환
+//        return tableViewItems.count // 아이템 수 반환
+        return self.data.count // 아이템 수 반환
     }
 }
