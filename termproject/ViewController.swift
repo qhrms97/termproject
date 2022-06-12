@@ -16,7 +16,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBAction func addingBtn(_ sender: UIButton) {
-        performSegue(withIdentifier: "Add", sender: self)
+        guard let secPage = self.storyboard?
+            .instantiateViewController(withIdentifier: "SecPage") as? SecondViewController else {
+            return
+        }
+        
+        secPage.modalPresentationStyle = .fullScreen
+        self.present(secPage, animated: true)
+        
+//        performSegue(withIdentifier: "Add", sender: self)
     }
     /* ================================== */
     
@@ -27,15 +35,25 @@ class ViewController: UIViewController {
     var components = DateComponents()
     
     /* 테이블 변수 선언*/
-    var tableViewItems = ["날짜"]
-    var tableViewItems2 = ["내용"]
-    var tableViewItems3 = ["금액"]
+    var tableViewItems : [String] = []
+    var tableViewItems2 : [String] = []
+    var tableViewItems3 : [Int] = []
     
     /* 데이터 베이스 접근 */
     let db = Firestore.firestore()
-//    let dbItems = [String:Any]()
+    
     // 빈 딕셔너리 생성
     var data: [String:Any] = [:]
+    var data_plus : [String:Any] = [:]
+    var data_minus : [String:Any] = [:]
+    
+    // 수입 지출
+    var plusItems : [Int] = []
+    var minusItems : [Int] = []
+    
+    // 총 수입 지출
+    var plustotal : Int = 0
+    var minustotal : Int = 0
     
     /* ================================== */
     
@@ -45,8 +63,24 @@ class ViewController: UIViewController {
         
         // DataSource delegete을 ViewController로 설정
         tableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        /* 변수 초기화 */
+        self.tableViewItems = []
+        self.tableViewItems2 = []
+        self.tableViewItems3 = []
+        self.minusItems = []
+        self.minustotal = 0
+        self.plusItems = []
+        self.plustotal = 0
+        
         
         self.getData()
+        
+        self.getplus()
+        self.getminus()
     }
     
     private func initView(){
@@ -81,9 +115,9 @@ class ViewController: UIViewController {
     func getData(){
         db.collection("account").getDocuments() { [self] (querySnapshot, err) in
             if let err = err {
-                print("ERROR GETTING DOCUMENT: \(err)")
+                print("ERROR GETTING DOCUMENT #1 : \(err)")
             } else {
-                print("GETTING DOCUMENT")
+                print("GETTING DOCUMENT #1 ")
                 guard let documents = querySnapshot?.documents else {return}
                 
                 for document in documents {
@@ -92,7 +126,7 @@ class ViewController: UIViewController {
                         
                         self.tableViewItems.append(self.data["date"] as! String)
                         self.tableViewItems2.append(self.data["content"] as! String)
-//                        self.tableViewItems3.append(self.data["money"] as! String)
+                        self.tableViewItems3.append(self.data["money"] as! Int)
                         
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
@@ -102,32 +136,82 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func getplus(){
+        db.collection("account").whereField("plus", isEqualTo: true).getDocuments() {
+            (querySnapshot, err) in
+            if let err = err {
+                print("ERROR GETTING DOCUMENT #2 : \(err)")
+            } else {
+                print("GETTING DOCUMENT #2")
+                
+                guard let documents = querySnapshot?.documents else {return}
+                
+                for document in documents {
+                    do{
+                        self.data_plus = document.data()
+//                        print("PLUS ITEMS ", self.data_plus)
+                        self.plusItems.append(self.data_plus["money"] as! Int)
+                    }
+                }
+                print("self plusitems " ,self.plusItems)
+                
+                for plusItem in self.plusItems {
+                    do{
+                        self.plustotal += plusItem
+                    }
+                }
+                
+                print("self plustotal " ,self.plustotal)
+            }
+        }
+    }
+    
+    func getminus(){
+        db.collection("account").whereField("plus", isEqualTo: false).getDocuments() {
+            (querySnapshot, err) in
+            if let err = err {
+                print("ERROR GETTING DOCUMENT #3 : \(err)")
+            } else {
+                print("GETTING DOCUMENT #3")
+                
+                guard let documents = querySnapshot?.documents else {return}
+                
+                for document in documents {
+                    do{
+                        self.data_minus = document.data()
+//                        print("MINUS ITEMS ", self.data_minus)
+                        self.minusItems.append(self.data_minus["money"] as! Int)
+                    }
+                }
+                print("self minus items " , self.minusItems)
+                
+                for minusItem in self.minusItems {
+                    do{
+                        self.minustotal += minusItem
+                    }
+                }
+                
+                print("self minus total " ,self.minustotal)
+            }
+        }
+    }
 }
 
 extension ViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath)
         
-//        print(data)
-//        let dictionary = self.data[(indexPath as NSIndexPath).row]
         // 테이블 뷰 아이템 지정
         (cell.contentView.subviews[0] as! UILabel).text = tableViewItems[indexPath.row]
         (cell.contentView.subviews[1] as! UILabel).text = tableViewItems2[indexPath.row]
-//        (cell.contentView.subviews[2] as! UILabel).text = tableViewItems3[indexPath.row]
-//        let content = self.data[(indexPath.row]
-//        for value in data["content"].values{
-//            print("###", value)
-//        }
-        
-//        print("##### ", content)
-        
-//        (cell.contentView.subviews[0] as! UILabel).text = content[indexPath.row]
+        (cell.contentView.subviews[2] as! UILabel).text = String(tableViewItems3[indexPath.row])
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return tableViewItems.count // 아이템 수 반환
-        return self.data.count // 아이템 수 반환
+        return self.tableViewItems.count // 아이템 수 반환
     }
 }
